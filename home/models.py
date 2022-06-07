@@ -11,6 +11,7 @@ TYP = (
 class Osoba(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     data_urodzenia = models.DateField()
+    miejsce_zameldowania = models.TextField()
     class Meta:
         verbose_name_plural = 'Osoby'
 
@@ -19,6 +20,8 @@ class Wybory(models.Model):
     typ = models.CharField(choices=TYP, max_length=30)
     class Meta:
         verbose_name_plural = 'Wybory'
+    def __str__(self):
+        return self.nazwa
 
 class Uprawnieni(models.Model):
     id_wyborow = models.ForeignKey(Wybory, on_delete=models.CASCADE)
@@ -30,6 +33,14 @@ class Uprawnieni(models.Model):
 class Kandydaci(models.Model):
     id_wyborow = models.ForeignKey(Wybory, on_delete=models.CASCADE)
     pesel = models.ForeignKey(Osoba, on_delete=models.CASCADE)
-    poparcie = models.PositiveSmallIntegerField()
+    poparcie = models.PositiveSmallIntegerField(default=0)
     class Meta:
         verbose_name_plural = 'Kandydaci'
+    def __str__(self):
+        return self.pesel.__str__()
+
+
+def get_first_name(self):
+    return self.username.__str__()
+
+User.add_to_class("__str__", get_first_name)
