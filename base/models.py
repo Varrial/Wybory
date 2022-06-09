@@ -8,12 +8,12 @@ TYP = (
     ('dziekana', 'Dziekana wydziału'),
 )
 
-class Osoba(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    data_urodzenia = models.DateField()
-    miejsce_zameldowania = models.TextField()
-    class Meta:
-        verbose_name_plural = 'Osoby'
+# class Osoba(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#     data_urodzenia = models.DateField()
+#     miejsce_zameldowania = models.TextField()
+#     class Meta:
+#         verbose_name_plural = 'Osoby'
 
 class Wybory(models.Model):
     nazwa = models.CharField(max_length=255)
@@ -25,22 +25,16 @@ class Wybory(models.Model):
 
 class Uprawnieni(models.Model):
     id_wyborow = models.ForeignKey(Wybory, on_delete=models.CASCADE)
-    pesel = models.ForeignKey(Osoba, on_delete=models.CASCADE)
+    pesel = models.ForeignKey(User, on_delete=models.CASCADE)
     CzyZaglosowal = models.BooleanField(default=False)
     class Meta:
         verbose_name_plural = 'Uprawnieni'
 
 class Kandydaci(models.Model):
     id_wyborow = models.ForeignKey(Wybory, on_delete=models.CASCADE)
-    pesel = models.ForeignKey(Osoba, on_delete=models.CASCADE)
+    pesel = models.ForeignKey(User, on_delete=models.CASCADE)
     poparcie = models.PositiveSmallIntegerField(default=0)
     class Meta:
         verbose_name_plural = 'Kandydaci'
     def __str__(self):
         return self.pesel.__str__()
-
-
-def get_first_name(self):
-    return self.username.__str__()
-
-User.add_to_class("__str__", get_first_name)

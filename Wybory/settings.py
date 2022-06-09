@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # my apps
 
-    'home.apps.HomeConfig',
+    'base.apps.BaseConfig',
 ]
 
 MIDDLEWARE = [
