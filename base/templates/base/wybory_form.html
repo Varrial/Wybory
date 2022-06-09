@@ -1,0 +1,15 @@
+<div>
+    <form method="post" action="">
+        {% csrf_token %}
+        <p>Wybierz swojego kandydata:</p>
+
+        {% for kandydat in kandydaci %}
+
+            <input type="radio" id="{{ kandydat }}" name="kandydat" value={{ kandydat }}>
+            <label for="html"> {{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }} </label><br>
+
+        {% endfor %}
+        <br>
+        <input type="submit" value="Potwierdzam">
+    </form>
+</div>

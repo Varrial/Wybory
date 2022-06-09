@@ -1,7 +1,12 @@
 {% extends 'main.html' %}
 
+
 {% block content %}
 
-<h1>szablon wyborów</h1>
+    <h1>{{ wybory.nazwa }}</h1>
+
+
+
+    {% include 'base/wybory_form.html' %}
 
 {% endblock %}
