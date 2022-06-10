@@ -10,6 +10,9 @@
 
         {% endfor %}
         <br>
-        <input type="submit" value="Potwierdzam">
+        {% if kandydaci.isNotNull %}
+            <input type="submit" value="Potwierdzam">
+        {% endif %} 
+
     </form>
 </div>

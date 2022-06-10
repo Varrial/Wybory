@@ -3,12 +3,22 @@ from django.shortcuts import render, redirect
 from django.forms import ModelChoiceField, forms
 
 
-from .models import Wybory, Kandydaci
+from .models import Wybory, Kandydaci, TypWyborow
 
 
 def home(request):
-    wybory = Wybory.objects.all()
-    context = {'wybory': wybory}
+    q = request.GET.get('q')
+
+    if q != '':
+        wybory = Wybory.objects.filter(typ__typ=q)
+    else:
+        wybory = Wybory.objects.all()
+    typy = TypWyborow.objects.all()
+
+    context = {
+        'wybory': wybory,
+        'typy': typy,
+    }
     return render(request, 'base/home.html', context)
 
 def wybory(request, pk):

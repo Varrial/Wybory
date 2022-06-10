@@ -2,9 +2,28 @@
 
 {% block content %}
 
-    <h1>szablon home</h1>
+    <style>
+        .home-container{
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+        }
+    </style>
 
-    <div>
+    <div class="home-container">
+        <div>
+            <h3>Wybory:</h3>
+
+            <div>
+                <a href="{% url 'home' %}?q={{ typ.typ }}">Wszystkie</a>
+            </div>
+
+            {% for typ in typy %}
+                <div>
+                    <a href="{% url 'home' %}?q={{ typ.typ }}">{{ typ.typ }}</a>
+                </div>
+            {% endfor %}
+        </div>
+
         <div>
             {% for wybor in wybory %}
                 <div>
