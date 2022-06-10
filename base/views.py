@@ -8,6 +8,8 @@ from .models import Wybory, Kandydaci, TypWyborow
 
 def home(request):
     q = request.GET.get('q')
+    if q == None:
+        q = ''
 
     if q != '':
         wybory = Wybory.objects.filter(typ__typ=q)
