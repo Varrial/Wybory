@@ -24,7 +24,15 @@
         <div>
             {% for wybor in wybory %}
                 <div>
-                    <h5>{{ wybor.id }} -- <a href="/wybory/{{ wybor.id }}">{{ wybor.nazwa }}</a></h5>
+                    <h5>{{ wybor.id }} --
+                        <a {% if user.is_authenticated and not wybor.CzyZaglosowal%} href="/wybory/{{ wybor.id }} {% endif %}">
+                            {{ wybor.id_wyborow.nazwa }}
+                        </a>
+                        {% if wybor.CzyZaglosowal %}
+                            (Oddano głos)
+                        {% endif %}
+
+                    </h5>
                 </div>
             {% endfor %}
         </div>

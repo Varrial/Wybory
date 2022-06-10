@@ -1,18 +1,26 @@
 <div>
-    <form method="post" action="">
-        {% csrf_token %}
-        <p>Wybierz swojego kandydata:</p>
+    {% if valid  %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <p>Wybierz swojego kandydata:</p>
 
-        {% for kandydat in kandydaci %}
+            {% for kandydat in kandydaci %}
 
-            <input type="radio" id="{{ kandydat }}" name="kandydat" value={{ kandydat }}>
-            <label for="html"> {{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }} </label><br>
+                <input type="radio" id="{{ kandydat }}" name="kandydat" value={{ kandydat }}>
+                <label for="html"> {{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }} </label><br>
 
-        {% endfor %}
-        <br>
-        {% if kandydaci.isNotNull %}
+            {% endfor %}
+
+            <br>
+
             <input type="submit" value="Potwierdzam">
-        {% endif %} 
 
-    </form>
+
+        </form>
+
+    {% else %}
+
+        <h3>Już zagłosowałeś w tych wyborach lub nie masz do nich uprawnień. Wróć na stronę główną <a href="{% url 'home' %}">tutaj</a> </h3>
+
+    {% endif %}
 </div>
