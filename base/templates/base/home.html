@@ -25,10 +25,10 @@
             {% for wybor in wybory %}
                 <div>
                     <h5>{{ wybor.id }} --
-                        <a {% if user.is_authenticated and not wybor.CzyZaglosowal%} href="/wybory/{{ wybor.id }} {% endif %}">
+                        <a {% if user.is_authenticated and not wybor.CzyZaglosowal%} href="/wybory/{{ wybor.id_wyborow.id }} {% endif %}">
                             {{ wybor.id_wyborow.nazwa }}
                         </a>
-                        {% if wybor.CzyZaglosowal %}
+                        {% if wybor.CzyZaglosowal and user.is_authenticated %}
                             (Oddano głos)
                         {% endif %}
 
