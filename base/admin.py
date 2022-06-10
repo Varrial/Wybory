@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-from base.models import Wybory, Uprawnieni, Kandydaci
+from base.models import Wybory, Uprawnieni, Kandydaci, TypWyborow
 
 # class AccountInline(admin.StackedInline ):
 #     model = Osoba
@@ -18,3 +18,4 @@ from base.models import Wybory, Uprawnieni, Kandydaci
 admin.site.register(Wybory)
 admin.site.register(Uprawnieni)
 admin.site.register(Kandydaci)
+admin.site.register(TypWyborow)
