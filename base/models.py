@@ -35,7 +35,7 @@ class Wybory(models.Model):
 class Uprawnieni(models.Model):
     id_wyborow = models.ForeignKey(Wybory, on_delete=models.CASCADE)
     pesel = models.ForeignKey(User, on_delete=models.CASCADE)
-    CzyZaglosowal = models.BooleanField(default=False)
+    CzyZaglosowal = models.BooleanField(default=False, verbose_name = "Czy Zagłosował?")
     class Meta:
         verbose_name_plural = 'Uprawnieni'
 
