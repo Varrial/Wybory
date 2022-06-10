@@ -2,12 +2,9 @@
 
 {% block content %}
 
-    <style>
-        .home-container{
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-        }
-    </style>
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base/style.css' %}">
 
     <div class="home-container">
         <div>
