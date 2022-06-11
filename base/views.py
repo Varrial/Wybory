@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -9,23 +11,27 @@ from .models import Wybory, Kandydaci, TypWyborow, Uprawnieni
 
 def home(request):
     q = request.GET.get('q')
+
     if q == None:
         q = ''
 
+    # Filtrowanie tylko po aktywnych
+    uprawnieni = Uprawnieni.objects.filter(id_wyborow__data_rozpoczecia__lte=datetime.datetime.now(),
+                                           id_wyborow__data_zakonczenia__gte=datetime.datetime.now(),
+                                           id_wyborow__czy_aktywne=True)
+
     if q != '':
-        if request.user.is_authenticated:
-            uprawnieni = Uprawnieni.objects.filter(id_wyborow__typ__typ=q, pesel=request.user)
-        else:
-            uprawnieni = Uprawnieni.objects.filter(id_wyborow__typ__typ=q)
-    elif request.user.is_authenticated:
-        uprawnieni = Uprawnieni.objects.filter(pesel=request.user)
-    else:
-        uprawnieni = Uprawnieni.objects.all()
+        uprawnieni = uprawnieni.filter(id_wyborow__typ__typ=q)  # filtrowanie po przyciskach
 
-    typy = TypWyborow.objects.all()
+    if request.user.is_authenticated:
+        uprawnieni = uprawnieni.filter(pesel=request.user)  # zalogowany dostaje tylko te w ktorych moze wziać udział
 
-    if not request.user.is_authenticated:
-        uprawnieni = Wybory.objects.all()
+    if not request.user.is_authenticated:   # niezalogowany dostaje wszystkie możliwe wybory z aktywnych
+        uprawnieni = Wybory.objects.filter(data_rozpoczecia__lte=datetime.datetime.now(),
+                                           data_zakonczenia__gte=datetime.datetime.now(),
+                                           czy_aktywne=True)
+
+    typy = TypWyborow.objects.filter()
 
     context = {
         'wybory': uprawnieni,
