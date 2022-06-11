@@ -1,4 +1,9 @@
 {% block header %}
+
+    <style>
+    .split-para      { display:block;margin:10px;}
+    .split-para span { display:block;float:right;}
+    </style>
 <div id="header">
     <div class="logo-container">
         <a href="/">
@@ -8,22 +13,21 @@
     </div>
 </div>
 {% endblock %}
-
+<div>
 {% if user.is_authenticated %}
-    <p>Witaj {{ user.first_name }} {{ user.last_name }}</p>
+    <h3 class="split-para">Witaj {{ user.first_name }} {{ user.last_name }}
 
-    <hr>
-
-    <a href={% url 'logout' %}>Logout</a>
+    <span>
+    <a href={% url 'logout' %}>Wylogowanie</a>
 
     {% if user.is_staff %}
-        <a href={% url 'admin:index' %}>Admin</a>
+        | <a href={% url 'admin:index' %}>Strona Adminstratora</a>
     {% endif %}
-
+    </span>
+    </h3>
 {% else %}
     <a href={% url 'login' %}>Login</a>
     <a href={% url 'register' %}>Register</a>
 {% endif %}
+</div>
 
-
-<hr>

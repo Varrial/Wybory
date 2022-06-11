@@ -6,9 +6,17 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
+<style>
+    body{
+        background-color:white;
+        margin: 0;
+        padding: 0;
+    }
+</style>
 <body>
+<div style="background-color: #EBB254">
     {% include 'navbar.html' %}
-
+    </div>
     {% block content %}
 
 
