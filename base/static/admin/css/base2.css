@@ -63,7 +63,6 @@
 .logo-container {
     display: flex;
     flex-direction: row;
-    background-color: #fcab74;
 }
 
 .logo {
