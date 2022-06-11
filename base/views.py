@@ -27,6 +27,7 @@ def home(request):
     context = {
         'wybory': uprawnieni,
         'typy': typy,
+        'wybrany': q,
     }
     return render(request, 'base/home.html', context)
 

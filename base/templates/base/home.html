@@ -20,9 +20,14 @@
 }
 .button:hover {
       background-color: #ba783d;
-      transition: 0.7s;
+      transition: 0.3s;
   }
+
 .button1 {background-color: #EBB254;} /* dark blue */
+
+.selected {
+      background-color: #c99949;
+  }
 
 .home-container1{
     display: grid;
@@ -39,20 +44,31 @@
         <div>
             <div>
                 <a href="{% url 'home' %}?q={{ typ.typ }}">
-                    <button class="button button1">Wszystkie</button>
+                    {%  if wybrany == "" %}
+                    <button class="button button1 selected">Wszystkie</button>
+                    {%  else %}
+                    <button class="button button1 ">Wszystkie</button>
+                    {% endif %}
                 </a>
             </div>
 
             {% for typ in typy %}
                 <div>
                     <a href="{% url 'home' %}?q={{ typ.typ }}">
-                        <button class="button button1">{{ typ.typ }}</button>
+                        {%  if wybrany ==  typ.typ  %}
+                    <button class="button button1 selected">{{ typ.typ }}</button>
+                    {%  else %}
+                    <button class="button button1 ">{{ typ.typ }}</button>
+                    {% endif %}
                     </a>
                 </div>
             {% endfor %}
         </div>
 
         <div>
+        {% if not wybory %}
+            <h3>Nie ma żadnych oczekujacych wyborów</h3>
+        {% else %}
             {% for wybor in wybory %}
                 <div>
                     <h5>{{ wybor.id }} --
@@ -67,6 +83,7 @@
                 </div>
             {% endfor %}
         </div>
+    {% endif %}
     </div>
 
 
