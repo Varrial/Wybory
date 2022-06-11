@@ -28,6 +28,7 @@ class KandydaciAdmin(admin.ModelAdmin):
     fields = ['id_wyborow', 'pesel', 'poparcie']
     readonly_fields = ('poparcie',)
     list_display = ['id_wyborow', 'pesel', 'poparcie']
+    list_filter = ['id_wyborow']
 
 class TypWyborowAdmin(admin.ModelAdmin):
     fields = ['typ']
