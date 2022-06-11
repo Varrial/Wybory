@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-from base.models import Wybory, Uprawnieni, Kandydaci
+from base.models import Wybory, Uprawnieni, Kandydaci, TypWyborow
 
 # class AccountInline(admin.StackedInline ):
 #     model = Osoba
@@ -14,7 +14,24 @@ from base.models import Wybory, Uprawnieni, Kandydaci
 #
 # admin.site.unregister(User)
 # admin.site.register(User, CustomizedUserAdmin)
+class WyboryAdmin(admin.ModelAdmin):
+    fields = ['typ', 'nazwa']
+    list_display = ['typ', 'nazwa']
 
-admin.site.register(Wybory)
-admin.site.register(Uprawnieni)
-admin.site.register(Kandydaci)
+class UprawnieniAdmin(admin.ModelAdmin):
+    fields = ['id_wyborow', 'pesel','CzyZaglosowal']
+    readonly_fields = ('CzyZaglosowal',)
+    list_display = ['id_wyborow', 'pesel','CzyZaglosowal']
+
+class KandydaciAdmin(admin.ModelAdmin):
+    fields = ['id_wyborow', 'pesel', 'poparcie']
+    readonly_fields = ('poparcie',)
+    list_display = ['id_wyborow', 'pesel', 'poparcie']
+
+class TypWyborowAdmin(admin.ModelAdmin):
+    fields = ['typ']
+
+admin.site.register(Wybory,WyboryAdmin)
+admin.site.register(Uprawnieni, UprawnieniAdmin)
+admin.site.register(Kandydaci, KandydaciAdmin)
+admin.site.register(TypWyborow, TypWyborowAdmin)
