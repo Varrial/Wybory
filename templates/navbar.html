@@ -1,6 +1,13 @@
-<a href="/">
-    <h1>LOGO</h1>
-</a>
+{% block header %}
+<div id="header">
+    <div class="logo-container">
+        <a href="/">
+            {%  load static %}
+            <img class="logo" src='{% static "logo.png" %}'>
+        </a>
+    </div>
+</div>
+{% endblock %}
 
 {% if user.is_authenticated %}
     <p>Witaj {{ user.first_name }} {{ user.last_name }}</p>

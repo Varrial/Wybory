@@ -30,7 +30,9 @@
     {% block header %}
     <div id="header">
         <div class="logo-container">
-            <img class="logo" src='{% static "logo.png" %}'>
+            <a href="/admin/">
+                <img class="logo" src='{% static "logo.png" %}'>
+            </a>
         </div>
         {% block usertools %}
         {% if has_permission %}
