@@ -1,7 +1,7 @@
 {% block header %}
 
     <style>
-    .split-para      { display:block;margin:10px;}
+    .split-para      { display:block;margin:10px 10px 0px 10px;}
     .split-para span { display:block;float:right;}
     </style>
 <div id="header">
@@ -26,8 +26,10 @@
     </span>
     </h3>
 {% else %}
+    <div style="text-align: right;margin-right: 10px">
     <a href={% url 'login' %}>Login</a>
     <a href={% url 'register' %}>Register</a>
+    </div>
 {% endif %}
 </div>
 

@@ -1,14 +1,40 @@
 {% extends 'main.html' %}
 
-
 {% block content %}
 
-    <form method="post" class="form-group">
+    <style>
+    .button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;width: 100px;
+  margin: 20px 20px;
+  cursor: pointer;
+}
+.button:hover {
+      background-color: #ba783d;
+      transition: 0.7s;
+  }
+.button1 {background-color: #EBB254;} /* dark blue */
+
+    .home-container1{
+    display: grid;
+    background-color: #f08a37;
+}
+</style>
+
+    <div class="home-container1">
+<h1 style="margin: 10px 10px 10px 10px;color:white">Logowanie:</h1>
+    </div>
+    <form method="post" class="form-group" style="margin: 10px 10px 10px 10px">
 
         {% csrf_token %}
 
         {{ form.as_p }}
-        <button type="submit">Login</button>
+        <button type="submit" class="button button1">Login</button>
 
     </form>
 
