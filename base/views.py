@@ -64,8 +64,3 @@ def wybory(request, pk):
         'valid': valid,
     }
     return render(request, 'base/wybory.html', context)
-
-# def formularz_kandydatow(request):
-#
-#     context = {'form': form}
-#     return render(request, 'base/wybory.html', context)
