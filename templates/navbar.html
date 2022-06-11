@@ -3,6 +3,8 @@
     <style>
     .split-para      { display:block;margin:10px 10px 0px 10px;}
     .split-para span { display:block;float:right;}
+
+
     </style>
 <div id="header">
     <div class="logo-container">
@@ -26,9 +28,11 @@
     </span>
     </h3>
 {% else %}
-    <div style="text-align: right;margin-right: 10px">
-    <a href={% url 'login' %}>Login</a>
-    <a href={% url 'register' %}>Register</a>
+    <div style="text-align: right;margin-right: 10px;">
+        <h3>
+            <a href={% url 'login' %}>Login</a>
+            <a href={% url 'register' %}>Register</a>
+        </h3>
     </div>
 {% endif %}
 </div>
