@@ -14,14 +14,15 @@ from base.models import Wybory, Uprawnieni, Kandydaci, TypWyborow
 #
 # admin.site.unregister(User)
 # admin.site.register(User, CustomizedUserAdmin)
+
 class WyboryAdmin(admin.ModelAdmin):
-    fields = ['typ', 'nazwa']
-    list_display = ['typ', 'nazwa']
+    fields = ['typ', 'nazwa', 'data_rozpoczecia', 'data_zakonczenia', 'czy_aktywne']
+    list_display = ['typ', 'nazwa', 'data_rozpoczecia', 'data_zakonczenia', 'czy_aktywne']
 
 class UprawnieniAdmin(admin.ModelAdmin):
-    fields = ['id_wyborow', 'pesel','CzyZaglosowal']
+    fields = ['id_wyborow', 'pesel', 'CzyZaglosowal']
     readonly_fields = ('CzyZaglosowal',)
-    list_display = ['id_wyborow', 'pesel','CzyZaglosowal']
+    list_display = ['id_wyborow', 'pesel', 'CzyZaglosowal']
 
 class KandydaciAdmin(admin.ModelAdmin):
     fields = ['id_wyborow', 'pesel', 'poparcie']
@@ -31,7 +32,7 @@ class KandydaciAdmin(admin.ModelAdmin):
 class TypWyborowAdmin(admin.ModelAdmin):
     fields = ['typ']
 
-admin.site.register(Wybory,WyboryAdmin)
+admin.site.register(Wybory, WyboryAdmin)
 admin.site.register(Uprawnieni, UprawnieniAdmin)
 admin.site.register(Kandydaci, KandydaciAdmin)
 admin.site.register(TypWyborow, TypWyborowAdmin)

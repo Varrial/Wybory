@@ -71,14 +71,18 @@
         {% else %}
             {% for wybor in wybory %}
                 <div>
-                    <h5>{{ wybor.id }} --
-                        <a {% if user.is_authenticated and not wybor.CzyZaglosowal%} href="/wybory/{{ wybor.id_wyborow.id }} {% endif %}">
-                            {{ wybor.id_wyborow.nazwa }}
-                        </a>
-                        {% if wybor.CzyZaglosowal and user.is_authenticated %}
-                            (Oddano głos)
-                        {% endif %}
+                    <h5>
+                        {% if user.is_authenticated %}
+                            <a {% if not wybor.CzyZaglosowal %} href="/wybory/{{ wybor.id_wyborow.id }} {% endif %}">
+                                {{ wybor.id_wyborow.nazwa }}
+                            </a>
+                            {% if wybor.CzyZaglosowal %}
+                                (Oddano głos)
+                            {% endif %}
 
+                        {% else %}
+                            <a>{{ wybor.nazwa }}</a>
+                        {% endif %}
                     </h5>
                 </div>
             {% endfor %}

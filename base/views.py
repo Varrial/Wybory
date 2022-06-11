@@ -24,6 +24,9 @@ def home(request):
 
     typy = TypWyborow.objects.all()
 
+    if not request.user.is_authenticated:
+        uprawnieni = Wybory.objects.all()
+
     context = {
         'wybory': uprawnieni,
         'typy': typy,
@@ -64,8 +67,3 @@ def wybory(request, pk):
         'valid': valid,
     }
     return render(request, 'base/wybory.html', context)
-
-# def formularz_kandydatow(request):
-#
-#     context = {'form': form}
-#     return render(request, 'base/wybory.html', context)

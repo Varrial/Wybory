@@ -14,9 +14,11 @@ from django.db import models
 #     miejsce_zameldowania = models.TextField()
 #     class Meta:
 #         verbose_name_plural = 'Osoby'
+from django.utils import timezone
+
 
 class TypWyborow(models.Model):
-    typ = models.CharField(max_length=40)
+    typ = models.CharField(max_length=40, unique=True)
     class Meta:
         verbose_name_plural = 'Typy Wyborów'
 
@@ -27,6 +29,10 @@ class TypWyborow(models.Model):
 class Wybory(models.Model):
     nazwa = models.CharField(max_length=255)
     typ = models.ForeignKey(TypWyborow, on_delete=models.CASCADE)
+    data_rozpoczecia = models.DateTimeField(default=timezone.now)
+    data_zakonczenia = models.DateTimeField(default=timezone.now)
+    czy_aktywne = models.BooleanField(default=True)
+
     class Meta:
         verbose_name_plural = 'Wybory'
     def __str__(self):
