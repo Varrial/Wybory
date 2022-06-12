@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+    <style>
+.home-container1{
+    display: grid;
+    background-color: #f08a37;
+}
+
+    </style>
+
+
+    <div class="home-container1">
+    <h3 style="color:white;text-align:center;">Dodajesz wybory</h3>
+    </div>
+    <form method="post" action="">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+    <button type="submit" class="button button1">Register</button>
+
+    </form>
+
+{% endblock %}
+
+
+

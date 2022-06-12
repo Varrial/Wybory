@@ -37,12 +37,12 @@
     </style>
 
      <div class="home-container1">
-    <h3 style="color:white;text-align:center;">&nbsp;&nbsp;Zarządzaj kandydatami do wyborów:</h3>
+    <h3 style="color:white;text-align:center;">&nbsp;&nbsp;Zarządzaj uprawnionymi</h3>
     </div>
     <div class="home-container">
         <div>
             <div>
-                <a href="{% url 'zarzadzaj_kandydatami' %}?q={{ typ.typ }}">
+                <a href="{% url 'zarzadzaj_uprawnionymi' %}?q={{ typ.typ }}">
                     {%  if wybrany == "" %}
                     <button class="button button1 selected">Wszystkie</button>
                     {%  else %}
@@ -53,7 +53,7 @@
 
             {% for typ in typy %}
                 <div>
-                    <a href="{% url 'zarzadzaj_kandydatami' %}?q={{ typ.typ }}">
+                    <a href="{% url 'zarzadzaj_uprawnionymi' %}?q={{ typ.typ }}">
                         {%  if wybrany ==  typ.typ  %}
                     <button class="button button1 selected">{{ typ.typ }}</button>
                     {%  else %}

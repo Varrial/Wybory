@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+    <style>
+.home-container1{
+    display: grid;
+    background-color: #f08a37;
+}
+
+    </style>
+
+
+    <div class="home-container1">
+    <h3 style="color:white;text-align:center;">Zarządzasz uprawnionymi w: {{ wybory.nazwa }}</h3>
+    </div>
+
+    <form method="post" action="">
+    {% csrf_token %}
+    {% for user in users %}
+        <input type="checkbox" name="user" value="{{ user.id }}"
+            {% for uprawniony in uprawnieni %}
+                {% if user.id == uprawniony.0 %}checked{% endif %}
+            {% endfor %}>
+        <label for="{{ user.id }}">{{ user.username }} {{ user.first_name }} {{ user.last_name }}</label><br>
+    {% endfor %}
+    <input class="buttonVote" type="submit" value="Potwierdzam">
+    </form>
+
+{% endblock %}

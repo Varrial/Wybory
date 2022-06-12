@@ -14,6 +14,7 @@ from django.db import models
 #     miejsce_zameldowania = models.TextField()
 #     class Meta:
 #         verbose_name_plural = 'Osoby'
+from django.forms import ModelForm
 from django.utils import timezone
 
 

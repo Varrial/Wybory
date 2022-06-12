@@ -1,11 +1,13 @@
 import datetime
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.forms import ModelChoiceField, forms
 
-
+from .forms import newWybory
 from .models import Wybory, Kandydaci, TypWyborow, Uprawnieni
 
 
@@ -109,6 +111,7 @@ def konkretne_wyniki(request, pk):
 
     return render(request, 'base/konkretne_wyniki.html', context)
 
+@staff_member_required
 def zarzadzaj_kandydatami(request):
     q = request.GET.get('q')
 
@@ -118,7 +121,8 @@ def zarzadzaj_kandydatami(request):
     wybory = Wybory.objects.filter(data_rozpoczecia__gte=datetime.datetime.now())
     typy = TypWyborow.objects.all()
 
-
+    if q != '':
+        wybory = wybory.filter(typ__typ=q)  # filtrowanie po przyciskach
 
     context = {
         'wybory': wybory,
@@ -127,3 +131,93 @@ def zarzadzaj_kandydatami(request):
     }
 
     return render(request, 'base/zarzadzaj_kandydatami.html', context)
+
+@staff_member_required
+def zarzadzaj_kandydatami_users(request, pk):
+    wybory = Wybory.objects.get(id=pk)
+    users = User.objects.all()
+    kandydaci = Kandydaci.objects.filter(id_wyborow=pk).values_list('pesel')
+
+    if request.method == 'POST':
+        nowi = request.POST.getlist('user')
+        Kandydaci.objects.filter(id_wyborow=pk).delete()
+        for nowy in nowi:
+            new = Kandydaci(
+                id_wyborow=Wybory.objects.get(id=pk),
+                pesel=User.objects.get(id=nowy),
+                poparcie=0,
+            )
+            new.save()
+        return redirect('home')
+
+    context = {
+        'wybory': wybory,
+        'users': users,
+        'kandydaci': kandydaci,
+    }
+
+
+    return render(request, 'base/zarzadzaj_kandydatami_users.html', context)
+
+@staff_member_required
+def zarzadzaj_uprawnionymi(request):
+    q = request.GET.get('q')
+
+    if q == None:
+        q = ''
+
+    wybory = Wybory.objects.filter(data_rozpoczecia__gte=datetime.datetime.now())
+    typy = TypWyborow.objects.all()
+
+    if q != '':
+        wybory = wybory.filter(typ__typ=q)  # filtrowanie po przyciskach
+
+    context = {
+        'wybory': wybory,
+        'typy': typy,
+        'wybrany': q,
+    }
+
+    return render(request, 'base/zarzadzaj_uprawnionymi.html', context)
+
+@staff_member_required
+def zarzadzaj_uprawnionymi_users(request, pk):
+    wybory = Wybory.objects.get(id=pk)
+    users = User.objects.all()
+    uprawnieni = Uprawnieni.objects.filter(id_wyborow=pk).values_list('pesel')
+
+    if request.method == 'POST':
+        nowi = request.POST.getlist('user')
+        Uprawnieni.objects.filter(id_wyborow=pk).delete()
+        for nowy in nowi:
+            new = Uprawnieni(
+                id_wyborow=Wybory.objects.get(id=pk),
+                pesel=User.objects.get(id=nowy),
+                CzyZaglosowal=False,
+            )
+            new.save()
+        return redirect('home')
+
+    context = {
+        'wybory': wybory,
+        'users': users,
+        'uprawnieni': uprawnieni,
+    }
+
+
+    return render(request, 'base/zarzadzaj_uprawnionymi_users.html', context)
+
+@staff_member_required
+def dodaj_wybory(request):
+    new_wybory = newWybory
+
+    if request.method == 'POST':
+        new = newWybory(request.POST)
+        new.save()
+        return redirect('home')
+
+    contex = {
+        'form': new_wybory
+    }
+
+    return render(request, 'base/dodaj_wybory.html', contex)
