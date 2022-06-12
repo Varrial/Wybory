@@ -108,3 +108,22 @@ def konkretne_wyniki(request, pk):
     }
 
     return render(request, 'base/konkretne_wyniki.html', context)
+
+def zarzadzaj_kandydatami(request):
+    q = request.GET.get('q')
+
+    if q == None:
+        q = ''
+
+    wybory = Wybory.objects.filter(data_rozpoczecia__gte=datetime.datetime.now())
+    typy = TypWyborow.objects.all()
+
+
+
+    context = {
+        'wybory': wybory,
+        'typy': typy,
+        'wybrany': q,
+    }
+
+    return render(request, 'base/zarzadzaj_kandydatami.html', context)
