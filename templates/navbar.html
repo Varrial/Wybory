@@ -50,7 +50,7 @@
         <a href="{% url 'wyniki' %}"><button class="buttonnav">Wyniki</button></a>
     {% if user.is_authenticated %}
         {% if user.is_staff %}
-            <a>
+            <a href="{% url 'zarzadzaj_kandydatami' %}">
                 <button class="buttonnav">Zarządzaj Kandydatami</button>
             </a>
             <a>
