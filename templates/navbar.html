@@ -1,6 +1,5 @@
-{% block header %}
+<style>
 
-    <style>
     .split-para      { display:block;margin:0px 10px 0px 10px;}
     .split-para span { display:block;float:right;}
     .buttonnav {
@@ -21,20 +20,10 @@
           transition: 0.3s;
       }
 
-    .button1 {background-color: #9e5c3e;} /* dark blue */
+</style>
 
-    .selected {
-          background-color: #a66c43;
-      }
+{% block header %}
 
-    .home-container1{
-        background-color: #f08a37;
-    }
-    .line {
-        margin: 0px 2px 0px 2px;
-    }
-
-    </style>
 <div id="header">
     <div class="logo-container">
         <a href="{% url 'home' %}">
@@ -43,8 +32,11 @@
         </a>
     </div>
 </div>
+
 {% endblock %}
+
 <div>
+
     <div style="background-color: #9e5c3e">
          <a href="{% url 'home' %}"><button class="buttonnav">Wybory</button></a>
         <a href="{% url 'wyniki' %}"><button class="buttonnav">Wyniki</button></a>
@@ -85,5 +77,6 @@
         </div>
     {% endif %}
     </div>
+
 </div>
 
