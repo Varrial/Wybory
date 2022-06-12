@@ -23,12 +23,13 @@ class UprawnieniAdmin(admin.ModelAdmin):
     fields = ['id_wyborow', 'pesel', 'CzyZaglosowal']
     readonly_fields = ('CzyZaglosowal',)
     list_display = ['id_wyborow', 'pesel', 'CzyZaglosowal']
+    list_filter = ['id_wyborow', 'pesel', 'CzyZaglosowal']
 
 class KandydaciAdmin(admin.ModelAdmin):
     fields = ['id_wyborow', 'pesel', 'poparcie']
     readonly_fields = ('poparcie',)
     list_display = ['id_wyborow', 'pesel', 'poparcie']
-    list_filter = ['id_wyborow']
+    list_filter = ['id_wyborow', 'pesel']
 
 class TypWyborowAdmin(admin.ModelAdmin):
     fields = ['typ']
