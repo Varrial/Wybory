@@ -1,9 +1,38 @@
 {% block header %}
 
     <style>
-    .split-para      { display:block;margin:10px 10px 0px 10px;}
+    .split-para      { display:block;margin:0px 10px 0px 10px;}
     .split-para span { display:block;float:right;}
+    .buttonnav {
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+        width: 19.71%;
+      margin: 0px 0px 0px 0px;
+      cursor: pointer;
+    background-color: #9e5c3e;
+    }
+    .buttonnav:hover {
+          background-color: #ba783d;
+          transition: 0.3s;
+      }
 
+    .button1 {background-color: #9e5c3e;} /* dark blue */
+
+    .selected {
+          background-color: #a66c43;
+      }
+
+    .home-container1{
+        background-color: #f08a37;
+    }
+    .line {
+        margin: 0px 2px 0px 2px;
+    }
 
     </style>
 <div id="header">
@@ -16,31 +45,45 @@
 </div>
 {% endblock %}
 <div>
-    <h3><a href="{% url 'home' %}">Home</a></h3>
-    <h3><a href="{% url 'wyniki' %}">Wyniki</a></h3>
-{% if user.is_authenticated %}
-    {% if user.is_staff %}
-        <h3><a>zarządzaj kondydatami</a></h3>
-        <h3><a>zarządzaj uprawnionymi</a></h3>
-        <h3><a>Zarządzaj wyborami</a></h3>
+    <div style="background-color: #9e5c3e">
+         <a href="{% url 'home' %}"><button class="buttonnav">Wybory</button></a>
+        <a href="{% url 'wyniki' %}"><button class="buttonnav">Wyniki</button></a>
+    {% if user.is_authenticated %}
+        {% if user.is_staff %}
+            <a>
+                <button class="buttonnav">Zarządzaj Kandydatami</button>
+            </a>
+            <a>
+                <button class="buttonnav">Zarzadzaj Uprawnionymi</button>
+            </a>
+            <a>
+                <button class="buttonnav">Zarządzaj wyborami</button>
+            </a>
+        {% endif %}
     {% endif %}
-    <h3 class="split-para">Witaj {{ user.first_name }} {{ user.last_name }}
-
-    <span>
-    <a href={% url 'logout' %}>Wylogowanie</a>
-
-    {% if user.is_superuser %}
-        | <a href={% url 'admin:index' %}>Strona Adminstratora</a>
-    {% endif %}
-    </span>
-    </h3>
-{% else %}
-    <div style="text-align: right;margin-right: 10px;">
-        <h3>
-            <a href={% url 'login' %}>Login</a>
-            <a href={% url 'register' %}>Register</a>
-        </h3>
     </div>
-{% endif %}
+
+    <div style="background-color: #eed9c6">
+        {% if user.is_authenticated %}
+         <h3 class="split-para">Witaj {{ user.first_name }} {{ user.last_name }}
+
+        <span>
+        <a href={% url 'logout' %}>Wylogowanie</a>
+
+        {% if user.is_superuser %}
+            | <a href={% url 'admin:index' %}>Strona Adminstratora</a>
+        {% endif %}
+        </span>
+        </h3>
+
+    {% else %}
+        <div style="text-align: right">
+            <h3 style="margin: 0px 10px 0px 10px">
+                <a href={% url 'login' %}>Login</a>
+                <a href={% url 'register' %}>Register</a>
+            </h3>
+        </div>
+    {% endif %}
+    </div>
 </div>
 
