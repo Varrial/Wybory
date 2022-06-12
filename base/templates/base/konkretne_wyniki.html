@@ -2,11 +2,27 @@
 
 
 {% block content %}
+<style>
+    .home-container1{
+    display: grid;
+    background-color: #f08a37;
+}
 
-    <h1>{{ nazwa_wyborow }}</h1>
+    .home-container2{
+    display: grid;
+        grid-template-columns: 1fr 2fr;
+}
+    </style>
+    <div class="home-container1">
+    <h3 style="color:white;text-align:center;">Wyniki Wyborów: {{ nazwa_wyborow }}</h3>
+    </div>
 
+    <div style="margin: 20px 20px 20px 20px">
     {% for kandydat in kandydaci %}
-        <h3>{{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }} {{ kandydat.poparcie }}</h3>
+        <div class="home-container2"><h3>{{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }} </h3> <h3>Ilość głosów: {{ kandydat.poparcie }}</h3>
+        </div>
+
     {% endfor %}
+    </div>
 
 {% endblock %}
