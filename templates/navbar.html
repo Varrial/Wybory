@@ -1,4 +1,5 @@
 {% block header %}
+
     <style>
     .split-para      { display:block;margin:10px 10px 0px 10px;}
     .split-para span { display:block;float:right;}
@@ -50,11 +51,14 @@
 {% if user.is_authenticated %}
     {% if user.is_staff %}
         <a>
-         <button class="buttonnav">Zarządzaj Kandydatami</button>
-     </a>
-    <a>
-        <button class="buttonnav">Zarzadzaj Uprawnionymi</button>
-    </a>
+            <button class="buttonnav">Zarządzaj Kandydatami</button>
+        </a>
+        <a>
+            <button class="buttonnav">Zarzadzaj Uprawnionymi</button>
+        </a>
+        <a>
+            <button class="buttonnav">Zarządzaj wyborami</button>
+        </a>
     {% endif %}
     </div>
     <h3 class="split-para">Witaj {{ user.first_name }} {{ user.last_name }}
@@ -69,7 +73,7 @@
     </h3>
 {% else %}
     <div style="text-align: right;margin-right: 10px;">
-        <h3 class="line">
+        <h3>
             <a href={% url 'login' %}>Login</a>
             <a href={% url 'register' %}>Register</a>
         </h3>
