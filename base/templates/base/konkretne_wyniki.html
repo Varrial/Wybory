@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+    <h1>{{ nazwa_wyborow }}</h1>
+
+    {% for kandydat in kandydaci %}
+        <h3>{{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }} {{ kandydat.poparcie }}</h3>
+    {% endfor %}
+
+{% endblock %}

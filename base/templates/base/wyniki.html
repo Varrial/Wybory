@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
-{% block content %}
 
+{% block content %}
     {% load static %}
 
     <link rel="stylesheet" type="text/css" href="{% static 'base/style.css' %}">
@@ -36,14 +36,13 @@
 
     </style>
 
-
-    <div class="home-container1">
+     <div class="home-container1">
     <h3 style="color:white;text-align:center;">&nbsp;&nbsp;Wybory w których bierzesz udział:</h3>
     </div>
     <div class="home-container">
         <div>
             <div>
-                <a href="{% url 'home' %}?q={{ typ.typ }}">
+                <a href="{% url 'wyniki' %}?q={{ typ.typ }}">
                     {%  if wybrany == "" %}
                     <button class="button button1 selected">Wszystkie</button>
                     {%  else %}
@@ -54,7 +53,7 @@
 
             {% for typ in typy %}
                 <div>
-                    <a href="{% url 'home' %}?q={{ typ.typ }}">
+                    <a href="{% url 'wyniki' %}?q={{ typ.typ }}">
                         {%  if wybrany ==  typ.typ  %}
                     <button class="button button1 selected">{{ typ.typ }}</button>
                     {%  else %}
@@ -65,30 +64,11 @@
             {% endfor %}
         </div>
 
-        <div>
-        {% if not wybory %}
-            <h3>Nie ma żadnych oczekujacych wyborów</h3>
-        {% else %}
-            {% for wybor in wybory %}
-                <div>
-                    <h5>
-                        {% if user.is_authenticated %}
-                            <a {% if not wybor.CzyZaglosowal %} href="wybory/{{ wybor.id_wyborow.id }} {% endif %}">
-                                {{ wybor.id_wyborow.nazwa }}
-                            </a>
-                            {% if wybor.CzyZaglosowal %}
-                                (Oddano głos)
-                            {% endif %}
-
-                        {% else %}
-                            <a>{{ wybor.nazwa }}</a>
-                        {% endif %}
-                    </h5>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+    {% for wybor in wybory %}
+        <h3>
+            <a href="{{ wybor.id }}">{{ wybor.nazwa }}</a>
+        </h3>
+    {% endfor %}
     </div>
-
 
 {% endblock %}

@@ -8,7 +8,7 @@
     </style>
 <div id="header">
     <div class="logo-container">
-        <a href="/">
+        <a href="{% url 'home' %}">
             {%  load static %}
             <img class="logo" src='{% static "logo.png" %}'>
         </a>
@@ -17,6 +17,7 @@
 {% endblock %}
 <div>
 {% if user.is_authenticated %}
+    <h3><a href="{% url 'wyniki' %}">Wyniki</a></h3>
     <h3 class="split-para">Witaj {{ user.first_name }} {{ user.last_name }}
 
     <span>

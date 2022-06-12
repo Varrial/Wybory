@@ -73,3 +73,37 @@ def wybory(request, pk):
         'valid': valid,
     }
     return render(request, 'base/wybory.html', context)
+
+def wyniki(request):
+    q = request.GET.get('q')
+
+    if q == None:
+        q = ''
+
+    # Filtrowanie tylko po aktywnych
+    wybory = Wybory.objects.filter(data_zakonczenia__lte=datetime.datetime.now())
+
+    if q != '':
+        wybory = wybory.filter(typ__typ=q)  # filtrowanie po przyciskach
+
+
+    typy = TypWyborow.objects.all()
+
+    context = {
+        'wybory': wybory,
+        'typy': typy,
+        'wybrany': q,
+    }
+
+    return render(request, 'base/wyniki.html', context)
+
+def konkretne_wyniki(request, pk):
+    kandydaci = Kandydaci.objects.filter(id_wyborow=pk)
+    nazwa_wyborow = Wybory.objects.get(id=pk)
+
+    context = {
+        'kandydaci': kandydaci,
+        'nazwa_wyborow': nazwa_wyborow,
+    }
+
+    return render(request, 'base/konkretne_wyniki.html', context)

@@ -6,7 +6,8 @@ from base import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('wybory/<str:pk>/', views.wybory, name='wybory'),
-    # path('wybory_form/', views.formularz_kandydatow, name='wybory_form'),
+    path('wyniki/', views.wyniki, name='wyniki'),
+    path('wyniki/<str:pk>/', views.konkretne_wyniki, name='konkretne_wyniki')
 ]
 
 admin.site.site_header = "Wybory"
