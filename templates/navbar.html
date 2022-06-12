@@ -1,7 +1,7 @@
 {% block header %}
 
     <style>
-    .split-para      { display:block;margin:10px 10px 0px 10px;}
+    .split-para      { display:block;margin:0px 10px 0px 10px;}
     .split-para span { display:block;float:right;}
     .buttonnav {
       border: none;
@@ -11,7 +11,7 @@
       text-decoration: none;
       display: inline-block;
       font-size: 16px;
-        width: 24.78%;
+        width: 19.71%;
       margin: 0px 0px 0px 0px;
       cursor: pointer;
     background-color: #9e5c3e;
@@ -45,39 +45,45 @@
 </div>
 {% endblock %}
 <div>
-<div style="background-color: #9e5c3e">
-     <a href="{% url 'home' %}"><button class="buttonnav">Wybory</button></a>
-    <a href="{% url 'wyniki' %}"><button class="buttonnav">Wyniki</button></a>
-{% if user.is_authenticated %}
-    {% if user.is_staff %}
-        <a>
-            <button class="buttonnav">Zarządzaj Kandydatami</button>
-        </a>
-        <a>
-            <button class="buttonnav">Zarzadzaj Uprawnionymi</button>
-        </a>
-        <a>
-            <button class="buttonnav">Zarządzaj wyborami</button>
-        </a>
+    <div style="background-color: #9e5c3e">
+         <a href="{% url 'home' %}"><button class="buttonnav">Wybory</button></a>
+        <a href="{% url 'wyniki' %}"><button class="buttonnav">Wyniki</button></a>
+    {% if user.is_authenticated %}
+        {% if user.is_staff %}
+            <a>
+                <button class="buttonnav">Zarządzaj Kandydatami</button>
+            </a>
+            <a>
+                <button class="buttonnav">Zarzadzaj Uprawnionymi</button>
+            </a>
+            <a>
+                <button class="buttonnav">Zarządzaj wyborami</button>
+            </a>
+        {% endif %}
     {% endif %}
     </div>
-    <h3 class="split-para">Witaj {{ user.first_name }} {{ user.last_name }}
 
-    <span>
-    <a href={% url 'logout' %}>Wylogowanie</a>
+    <div style="background-color: #eed9c6">
+        {% if user.is_authenticated %}
+         <h3 class="split-para">Witaj {{ user.first_name }} {{ user.last_name }}
 
-    {% if user.is_superuser %}
-        | <a href={% url 'admin:index' %}>Strona Adminstratora</a>
-    {% endif %}
-    </span>
-    </h3>
-{% else %}
-    <div style="text-align: right;margin-right: 10px;">
-        <h3>
-            <a href={% url 'login' %}>Login</a>
-            <a href={% url 'register' %}>Register</a>
+        <span>
+        <a href={% url 'logout' %}>Wylogowanie</a>
+
+        {% if user.is_superuser %}
+            | <a href={% url 'admin:index' %}>Strona Adminstratora</a>
+        {% endif %}
+        </span>
         </h3>
+
+    {% else %}
+        <div style="text-align: right">
+            <h3 style="margin: 0px 10px 0px 10px">
+                <a href={% url 'login' %}>Login</a>
+                <a href={% url 'register' %}>Register</a>
+            </h3>
+        </div>
+    {% endif %}
     </div>
-{% endif %}
 </div>
 
