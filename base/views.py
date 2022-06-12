@@ -100,6 +100,7 @@ def wyniki(request):
 def konkretne_wyniki(request, pk):
     kandydaci = Kandydaci.objects.filter(id_wyborow=pk)
     nazwa_wyborow = Wybory.objects.get(id=pk)
+    request.user.is_superuser
 
     context = {
         'kandydaci': kandydaci,

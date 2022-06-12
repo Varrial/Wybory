@@ -16,14 +16,19 @@
 </div>
 {% endblock %}
 <div>
-{% if user.is_authenticated %}
+    <h3><a href="{% url 'home' %}">Home</a></h3>
     <h3><a href="{% url 'wyniki' %}">Wyniki</a></h3>
+{% if user.is_authenticated %}
+    {% if user.is_staff %}
+        <h3><a>zarządzaj kondydatami</a></h3>
+        <h3><a>zarządzaj uprawnionymi</a></h3>
+    {% endif %}
     <h3 class="split-para">Witaj {{ user.first_name }} {{ user.last_name }}
 
     <span>
     <a href={% url 'logout' %}>Wylogowanie</a>
 
-    {% if user.is_staff %}
+    {% if user.is_superuser %}
         | <a href={% url 'admin:index' %}>Strona Adminstratora</a>
     {% endif %}
     </span>
