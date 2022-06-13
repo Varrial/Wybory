@@ -73,8 +73,8 @@
                 <div>
                     <h5>
                         <a>{{ wybor.nazwa }}</a>
-                        <a href="edytuj_wybory/{{ wybor.id }}">Edytuj</a>
-                        <a href="usun_wybory/{{ wybor.id }}">Usuń</a>
+                        <a href="{% url 'edytuj_wybory' wybor.id %}">Edytuj</a>
+                        <a href="{% url 'usun_wybory' %}?q={{ wybor.id }}">Usuń</a>
                     </h5>
                 </div>
             {% endfor %}

@@ -14,7 +14,7 @@
     <div class="home-container1">
     <h3 style="color:white;text-align:center;">Zarządzasz kandydatami w: {{ wybory.nazwa }}</h3>
     </div>
-
+<div style="margin: 20px">
     <form method="post" action="">
     {% csrf_token %}
     {% for user in users %}
@@ -26,5 +26,6 @@
     {% endfor %}
     <input class="buttonVote" type="submit" value="Potwierdzam">
     </form>
+</div>
 
 {% endblock %}

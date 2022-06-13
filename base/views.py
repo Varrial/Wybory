@@ -211,7 +211,7 @@ def zarzadzaj_uprawnionymi_users(request, pk):
 
 @staff_member_required
 def dodaj_wybory(request):
-    new_wybory = newWybory
+    new_wybory = newWybory()
 
     if request.method == 'POST':
         new = newWybory(request.POST)
@@ -244,3 +244,16 @@ def zarzadzaj_wyborami(request):
     }
 
     return render(request, 'base/zarzadzaj_wyborami.html', context)
+
+@staff_member_required
+def usun_wybory(request):
+    q = request.GET.get('q')
+    Wybory.objects.get(id=q).delete()
+    return redirect('home')
+
+@staff_member_required
+def edytuj_wybory(request, pk ):
+    form = newWybory()
+    contex = {
+        'form': form
+    }

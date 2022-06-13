@@ -63,12 +63,13 @@
                 </div>
             {% endfor %}
         </div>
-
+    <div>
     {% for wybor in wybory %}
         <h3>
             <a href="{{ wybor.id }}">{{ wybor.nazwa }}</a>
         </h3>
     {% endfor %}
+    </div>
     </div>
 
 {% endblock %}

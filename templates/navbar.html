@@ -50,15 +50,9 @@
         <a href="{% url 'wyniki' %}"><button class="buttonnav">Wyniki</button></a>
     {% if user.is_authenticated %}
         {% if user.is_staff %}
-            <a href="{% url 'zarzadzaj_kandydatami' %}">
-                <button class="buttonnav">Zarządzaj Kandydatami</button>
-            </a>
-            <a href="{% url 'zarzadzaj_uprawnionymi' %}">
-                <button class="buttonnav">Zarzadzaj Uprawnionymi</button>
-            </a>
-            <a href="{% url 'zarzadzaj_wyborami' %}">
-                <button class="buttonnav">Zarządzaj wyborami</button>
-            </a>
+            <a href="{% url 'zarzadzaj_kandydatami' %}"><button class="buttonnav">Zarządzaj Kandydatami</button></a>
+            <a href="{% url 'zarzadzaj_uprawnionymi' %}"><button class="buttonnav">Zarzadzaj Uprawnionymi</button></a>
+            <a href="{% url 'zarzadzaj_wyborami' %}"><button class="buttonnav">Zarządzaj wyborami</button></a>
         {% endif %}
     {% endif %}
     </div>
