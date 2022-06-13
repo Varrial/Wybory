@@ -216,7 +216,7 @@ def dodaj_wybory(request):
     if request.method == 'POST':
         new = newWybory(request.POST)
         new.save()
-        return redirect('home')
+        return redirect('zarzadzaj_wyborami')
 
     contex = {
         'form': new_wybory
@@ -232,6 +232,7 @@ def zarzadzaj_wyborami(request):
         q = ''
 
     wybory = Wybory.objects.filter(data_zakonczenia__lte=datetime.datetime.now())
+    wybory = Wybory.objects.all()
     typy = TypWyborow.objects.all()
 
     if q != '':
@@ -249,11 +250,20 @@ def zarzadzaj_wyborami(request):
 def usun_wybory(request):
     q = request.GET.get('q')
     Wybory.objects.get(id=q).delete()
-    return redirect('home')
+    return redirect('zarzadzaj_wyborami')
 
 @staff_member_required
 def edytuj_wybory(request, pk ):
-    form = newWybory()
+    wybor = Wybory.objects.get(id=pk)
+    form = newWybory(instance=wybor)
+
+    if request.method == 'POST':
+        form = newWybory(request.POST, instance=wybor)
+        form.save()
+        return redirect('zarzadzaj_wyborami')
+
+
     contex = {
         'form': form
     }
+    return render(request, 'base/dodaj_wybory.html', contex)
