@@ -32,6 +32,8 @@ def home(request):
         uprawnieni = Wybory.objects.filter(data_rozpoczecia__lte=datetime.datetime.now(),
                                            data_zakonczenia__gte=datetime.datetime.now(),
                                            czy_aktywne=True)
+        if q != '':
+            uprawnieni = uprawnieni.filter(typ__typ=q)
 
     typy = TypWyborow.objects.filter()
 
@@ -222,6 +224,7 @@ def dodaj_wybory(request):
 
     return render(request, 'base/dodaj_wybory.html', contex)
 
+@staff_member_required
 def zarzadzaj_wyborami(request):
     q = request.GET.get('q')
 
