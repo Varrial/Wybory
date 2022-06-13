@@ -13,6 +13,7 @@ urlpatterns = [
     path('zarzadzaj_uprawnionymi/', views.zarzadzaj_uprawnionymi, name='zarzadzaj_uprawnionymi'),
     path('zarzadzaj_uprawnionymi/<str:pk>/', views.zarzadzaj_uprawnionymi_users, name='zarzadzaj_uprawnionymi_users'),
     path('dodaj_wybory/', views.dodaj_wybory, name='dodaj_wybory'),
+    path('zarzadzaj_wyborami/', views.zarzadzaj_wyborami, name='zarzadzaj_wyborami')
 ]
 
 admin.site.site_header = "Wybory"

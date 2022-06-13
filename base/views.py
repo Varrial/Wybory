@@ -221,3 +221,23 @@ def dodaj_wybory(request):
     }
 
     return render(request, 'base/dodaj_wybory.html', contex)
+
+def zarzadzaj_wyborami(request):
+    q = request.GET.get('q')
+
+    if q == None:
+        q = ''
+
+    wybory = Wybory.objects.filter(data_zakonczenia__lte=datetime.datetime.now())
+    typy = TypWyborow.objects.all()
+
+    if q != '':
+        wybory = wybory.filter(typ__typ=q)  # filtrowanie po przyciskach
+
+    context = {
+        'wybory': wybory,
+        'typy': typy,
+        'wybrany': q,
+    }
+
+    return render(request, 'base/zarzadzaj_wyborami.html', context)

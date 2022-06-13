@@ -1,0 +1,91 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base/style.css' %}">
+
+    <style>
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;width: 250px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button:hover {
+      background-color: #ba783d;
+      transition: 0.3s;
+  }
+
+.button1 {background-color: #EBB254;} /* dark blue */
+
+.selected {
+      background-color: #c99949;
+  }
+
+.home-container1{
+    display: grid;
+    background-color: #f08a37;
+}
+
+    </style>
+
+
+    <div class="home-container1">
+    <h3 style="color:white;text-align:center;">&nbsp;&nbsp;Zarządzaj wyborami</h3>
+    </div>
+    <div class="home-container">
+        <div>
+            <div>
+                <a href="{% url 'zarzadzaj_wyborami' %}?q={{ typ.typ }}">
+                    {%  if wybrany == "" %}
+                    <button class="button button1 selected">Wszystkie</button>
+                    {%  else %}
+                    <button class="button button1 ">Wszystkie</button>
+                    {% endif %}
+                </a>
+            </div>
+
+            {% for typ in typy %}
+                <div>
+                    <a href="{% url 'zarzadzaj_wyborami' %}?q={{ typ.typ }}">
+                        {%  if wybrany ==  typ.typ  %}
+                    <button class="button button1 selected">{{ typ.typ }}</button>
+                    {%  else %}
+                    <button class="button button1 ">{{ typ.typ }}</button>
+                    {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div>
+        {% if not wybory %}
+            <h3>Nie ma żadnych oczekujacych wyborów</h3>
+        {% else %}
+            {% for wybor in wybory %}
+                <div>
+                    <h5>
+                        <a>{{ wybor.nazwa }}</a>
+                        <a href="edytuj_wybory/{{ wybor.id }}">Edytuj</a>
+                        <a href="usun_wybory/{{ wybor.id }}">Usuń</a>
+                    </h5>
+                </div>
+            {% endfor %}
+            <h5>
+                <a href="{% url 'dodaj_wybory' %}">
+                    Dodaj Wybory
+                </a>
+            </h5>
+        </div>
+    {% endif %}
+    </div>
+
+
+{% endblock %}
