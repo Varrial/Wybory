@@ -61,14 +61,18 @@ def wybory(request, pk):
 
     valid = valid
     if request.method == 'POST':
-        zaglosowany = request.POST.get('kandydat')
-        item = kandydaci.get(pesel__username=zaglosowany)
-        item.poparcie += 1  # zwiekszenie poparcia
-        item.save()
         glosujacy = uprawnieni.get(id_wyborow=wybory, pesel=request.user)
         glosujacy.CzyZaglosowal = True  # zmiana na zagłosowane
         glosujacy.save()
-        print(item.poparcie)
+
+        zaglosowany = request.POST.get('kandydat')
+        if zaglosowany == 'Null':
+            return redirect('home')
+
+        item = kandydaci.get(id=zaglosowany)
+        item.poparcie += 1  # zwiekszenie poparcia
+        item.save()
+
         return redirect('home')
 
     context = {
@@ -105,10 +109,27 @@ def konkretne_wyniki(request, pk):
     kandydaci = Kandydaci.objects.filter(id_wyborow=pk)
     nazwa_wyborow = Wybory.objects.get(id=pk)
 
+    uprawnieni = Uprawnieni.objects.filter(id_wyborow=pk)
+    ilosc_uprawnionych = uprawnieni.count()
+
+    uprawnieni.filter(CzyZaglosowal=1)
+    ilosc_oddanych_glosow = uprawnieni.count()
+
+    ilosc_oddanych_glosow_procent = ilosc_oddanych_glosow / ilosc_uprawnionych * 100
+
+    ilosc_nieoddanych_glosow = ilosc_uprawnionych - ilosc_oddanych_glosow
+
+    ilosc_nieoddanych_glosow_procent = ilosc_nieoddanych_glosow / ilosc_uprawnionych * 100
+
 
     context = {
         'kandydaci': kandydaci,
         'nazwa_wyborow': nazwa_wyborow,
+        'ilosc_uprawnionych': ilosc_uprawnionych,
+        'ilosc_oddanych_glosow': ilosc_oddanych_glosow,
+        'ilosc_oddanych_glosow_procent': int(ilosc_oddanych_glosow_procent),
+        'ilosc_nieoddanych_glosow': ilosc_nieoddanych_glosow,
+        'ilosc_nieoddanych_glosow_procent': int(ilosc_nieoddanych_glosow_procent),
     }
 
     return render(request, 'base/konkretne_wyniki.html', context)

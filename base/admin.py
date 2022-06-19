@@ -21,7 +21,7 @@ class WyboryAdmin(admin.ModelAdmin):
 
 class UprawnieniAdmin(admin.ModelAdmin):
     fields = ['id_wyborow', 'pesel', 'CzyZaglosowal']
-    readonly_fields = ('CzyZaglosowal',)
+    # readonly_fields = ('CzyZaglosowal',)
     list_display = ['id_wyborow', 'pesel', 'CzyZaglosowal']
     list_filter = ['id_wyborow', 'pesel', 'CzyZaglosowal']
 

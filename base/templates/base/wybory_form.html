@@ -30,13 +30,17 @@
             {% csrf_token %}
             <p>Wybierz swojego kandydata:</p>
 
+            <input type="radio" id="{{ kandydat }}" name="kandydat" value="Null" required>
+            <label for="html"><i> Pusty głos </i></label><br>
+
             {% for kandydat in kandydaci %}
 
-                <input type="radio" id="{{ kandydat }}" name="kandydat" value={{ kandydat }}>
+                <input type="radio" id="{{ kandydat }}" name="kandydat" value="{{ kandydat.id }}" required>
                 <label for="html"> {{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }} </label><br>
 
             {% endfor %}
-
+                <input type="radio" id="null" name="kandydat" value={{ kandydat.id }} required>
+                <label for="html"> {{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }} </label><br>
             <br>
 
             <input class="buttonVote" type="submit" value="Potwierdzam">
