@@ -28,6 +28,9 @@
     <h3>Ilość osób uprawnionych: {{ ilosc_uprawnionych }}</h3>
     <h3>Ilość oddanych głosów: {{ ilosc_oddanych_glosow }} ({{ ilosc_oddanych_glosow_procent }}%)</h3>
     <h3>Ilość nieoddanych głosów: {{ ilosc_nieoddanych_glosow }} ({{ ilosc_nieoddanych_glosow_procent }}%)</h3>
+    <form method="get" action="{% url "konkretne_wyniki_pdf" pk %}">
+        <button type="submit">Generuj raport</button>
+    </form>
     </div>
 
 {% endblock %}

@@ -1,11 +1,17 @@
 import datetime
+import io
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.forms import ModelChoiceField, forms
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import inch
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfgen import canvas
 
 from .forms import newWybory
 from .models import Wybory, Kandydaci, TypWyborow, Uprawnieni
@@ -118,15 +124,11 @@ def konkretne_wyniki(request, pk):
     ilosc_nieoddanych_glosow_procent = 0
 
     if ilosc_uprawnionych > 0:
-        uprawnieni.filter(CzyZaglosowal=1)
+        uprawnieni = uprawnieni.filter(CzyZaglosowal=1)
         ilosc_oddanych_glosow = uprawnieni.count()
-
         ilosc_oddanych_glosow_procent = ilosc_oddanych_glosow / ilosc_uprawnionych * 100
-
         ilosc_nieoddanych_glosow = ilosc_uprawnionych - ilosc_oddanych_glosow
-
         ilosc_nieoddanych_glosow_procent = ilosc_nieoddanych_glosow / ilosc_uprawnionych * 100
-
 
     context = {
         'kandydaci': kandydaci,
@@ -136,9 +138,67 @@ def konkretne_wyniki(request, pk):
         'ilosc_oddanych_glosow_procent': int(ilosc_oddanych_glosow_procent),
         'ilosc_nieoddanych_glosow': ilosc_nieoddanych_glosow,
         'ilosc_nieoddanych_glosow_procent': int(ilosc_nieoddanych_glosow_procent),
+        'pk': pk,
     }
 
     return render(request, 'base/konkretne_wyniki.html', context)
+
+
+def konkretne_wyniki_pdf(request, pk):
+    kandydaci = Kandydaci.objects.filter(id_wyborow=pk)
+    nazwa_wyborow = Wybory.objects.get(id=pk)
+
+    uprawnieni = Uprawnieni.objects.filter(id_wyborow=pk)
+    ilosc_uprawnionych = uprawnieni.count()
+
+    ilosc_oddanych_glosow = 0
+    ilosc_oddanych_glosow_procent = 0
+    ilosc_nieoddanych_glosow = 0
+    ilosc_nieoddanych_glosow_procent = 0
+
+    if ilosc_uprawnionych > 0:
+        uprawnieni = uprawnieni.filter(CzyZaglosowal=1)
+        ilosc_oddanych_glosow = uprawnieni.count()
+        ilosc_oddanych_glosow_procent = ilosc_oddanych_glosow / ilosc_uprawnionych * 100
+        ilosc_nieoddanych_glosow = ilosc_uprawnionych - ilosc_oddanych_glosow
+        ilosc_nieoddanych_glosow_procent = ilosc_nieoddanych_glosow / ilosc_uprawnionych * 100
+
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+    textob.setFont("Verdana", 22)
+    textob.textLine(f'{nazwa_wyborow.nazwa} - podumowanie')
+    textob.setFont("Verdana", 14)
+
+    for kandydat in kandydaci:
+        textob.textLine("")
+        dane = (str(kandydat.pesel.first_name) + " " + str(kandydat.pesel.last_name)).ljust(60)
+        textob.textLine(f'{dane} Ilość głosów: {kandydat.poparcie}')
+        print(f'{dane} Ilość głosów: {kandydat.poparcie}')
+
+    textob.textLine("")
+    textob.textLine("")
+    textob.setFont("Verdana", 18)
+    textob.textLine("Frekwencja: ")
+    textob.setFont("Verdana", 14)
+
+    textob.textLine("")
+    textob.textLine(f'Ilość osób uprawnionych: {ilosc_uprawnionych}')
+    textob.textLine("")
+    textob.textLine(f'Ilość oddanych głosów: {ilosc_oddanych_glosow} ({ilosc_oddanych_glosow_procent}%)')
+    textob.textLine("")
+    textob.textLine(f'Ilość nieoddanych głosów: {ilosc_nieoddanych_glosow} ({ilosc_nieoddanych_glosow_procent}%)')
+
+
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=True, filename='pdf.pdf')
+
 
 @staff_member_required
 def zarzadzaj_kandydatami(request):
