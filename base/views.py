@@ -112,14 +112,20 @@ def konkretne_wyniki(request, pk):
     uprawnieni = Uprawnieni.objects.filter(id_wyborow=pk)
     ilosc_uprawnionych = uprawnieni.count()
 
-    uprawnieni.filter(CzyZaglosowal=1)
-    ilosc_oddanych_glosow = uprawnieni.count()
+    ilosc_oddanych_glosow = 0
+    ilosc_oddanych_glosow_procent = 0
+    ilosc_nieoddanych_glosow = 0
+    ilosc_nieoddanych_glosow_procent = 0
 
-    ilosc_oddanych_glosow_procent = ilosc_oddanych_glosow / ilosc_uprawnionych * 100
+    if ilosc_uprawnionych < 0:
+        uprawnieni.filter(CzyZaglosowal=1)
+        ilosc_oddanych_glosow = uprawnieni.count()
 
-    ilosc_nieoddanych_glosow = ilosc_uprawnionych - ilosc_oddanych_glosow
+        ilosc_oddanych_glosow_procent = ilosc_oddanych_glosow / ilosc_uprawnionych * 100
 
-    ilosc_nieoddanych_glosow_procent = ilosc_nieoddanych_glosow / ilosc_uprawnionych * 100
+        ilosc_nieoddanych_glosow = ilosc_uprawnionych - ilosc_oddanych_glosow
+
+        ilosc_nieoddanych_glosow_procent = ilosc_nieoddanych_glosow / ilosc_uprawnionych * 100
 
 
     context = {
