@@ -117,7 +117,7 @@ def konkretne_wyniki(request, pk):
     ilosc_nieoddanych_glosow = 0
     ilosc_nieoddanych_glosow_procent = 0
 
-    if ilosc_uprawnionych < 0:
+    if ilosc_uprawnionych > 0:
         uprawnieni.filter(CzyZaglosowal=1)
         ilosc_oddanych_glosow = uprawnieni.count()
 
