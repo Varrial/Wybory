@@ -169,7 +169,7 @@ def konkretne_wyniki_pdf(request, pk):
     textob.setTextOrigin(inch, inch)
     pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
     textob.setFont("Verdana", 16)
-    textob.textLine(f'{nazwa_wyborow.nazwa} - podumowanie')
+    textob.textLine(f'{nazwa_wyborow.nazwa} - podsumowanie')
     textob.setFont("Verdana", 11)
 
     for kandydat in kandydaci:
