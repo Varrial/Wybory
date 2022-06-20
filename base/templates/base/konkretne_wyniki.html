@@ -12,25 +12,84 @@
     display: grid;
         grid-template-columns: 1fr 2fr;
 }
-    </style>
+    .buttonReg {
+  background-color: darkgray;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;width: 250px;
+  margin: 0 50px 20px 50px;
+  cursor: pointer;
+}
+.buttonReg:hover {
+      background-color: #ba783d;
+      transition: 0.3s;
+  }
+
+.buttonReg1 {background-color: #EBB254;} /* dark blue */
+</style>
+
     <div class="home-container1">
     <h3 style="color:white;text-align:center;">Wyniki Wyborów: {{ nazwa_wyborow }}</h3>
     </div>
+
+    <h2>Wykres przedstawiający wyniki: </h2>
+
+    <div id="container" style="width: 50%;">
+        <canvas id="pie-chart"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script><script>
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [{% for kandydat in kandydaci %}{{ kandydat.poparcie }},{% endfor %}],
+          backgroundColor: [
+              '#EBB254', '#9e5c3e', '#f08a37', '#33BC0F', '#EBB254', '#9e5c3e', '#f08a37', '#33BC0F',
+              '#EBB254', '#9e5c3e', '#f08a37', '#33BC0F', '#EBB254', '#9e5c3e', '#f08a37', '#33BC0F',
+          ],
+        }],
+        labels: [{% for kandydat in kandydaci %}'{{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }}',{% endfor %}]
+      },
+      options: {
+        responsive: true,
+        legend: {
+            position: 'bottom',
+        },
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+  </script>
+
+    <h2>Zestawienie wyników: </h2>
 
     <div style="margin: 20px 20px 20px 20px">
     {% for kandydat in kandydaci %}
         <div class="home-container2"><h3>{{ kandydat.pesel.first_name }} {{ kandydat.pesel.last_name }} </h3> <h3>Ilość głosów: {{ kandydat.poparcie }}</h3>
         </div>
-
     {% endfor %}
+    </div>
+
     <br>
     <h2>Frekwencja</h2>
-    <h3>Ilość osób uprawnionych: {{ ilosc_uprawnionych }}</h3>
-    <h3>Ilość oddanych głosów: {{ ilosc_oddanych_glosow }} ({{ ilosc_oddanych_glosow_procent }}%)</h3>
-    <h3>Ilość nieoddanych głosów: {{ ilosc_nieoddanych_glosow }} ({{ ilosc_nieoddanych_glosow_procent }}%)</h3>
-    <form method="get" action="{% url "konkretne_wyniki_pdf" pk %}">
-        <button type="submit">Generuj raport</button>
-    </form>
+    <div style="margin: 20px 20px 20px 20px">
+        <div class="home-container2">
+        <h3>Ilość osób uprawnionych: {{ ilosc_uprawnionych }}</h3>
+        </div><div class="home-container2">
+        <h3>Ilość oddanych głosów: {{ ilosc_oddanych_glosow }} ({{ ilosc_oddanych_glosow_procent }}%)</h3>
+        </div><div class="home-container2">
+            <h3>    Ilość nieoddanych głosów: {{ ilosc_nieoddanych_glosow }} ({{ ilosc_nieoddanych_glosow_procent }}%)</h3>
+        </div>
     </div>
+    <form method="get" action="{% url "konkretne_wyniki_pdf" pk %}">
+        <button type="submit" class="buttonReg buttonREg1">Generuj raport</button>
+    </form>
 
 {% endblock %}

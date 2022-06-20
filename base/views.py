@@ -168,21 +168,21 @@ def konkretne_wyniki_pdf(request, pk):
     textob = c.beginText()
     textob.setTextOrigin(inch, inch)
     pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
-    textob.setFont("Verdana", 22)
+    textob.setFont("Verdana", 16)
     textob.textLine(f'{nazwa_wyborow.nazwa} - podumowanie')
-    textob.setFont("Verdana", 14)
+    textob.setFont("Verdana", 11)
 
     for kandydat in kandydaci:
         textob.textLine("")
-        dane = (str(kandydat.pesel.first_name) + " " + str(kandydat.pesel.last_name)).ljust(60)
+        dane = (str(kandydat.pesel.first_name) + " " + str(kandydat.pesel.last_name)).ljust(30)
         textob.textLine(f'{dane} Ilość głosów: {kandydat.poparcie}')
         print(f'{dane} Ilość głosów: {kandydat.poparcie}')
 
     textob.textLine("")
     textob.textLine("")
-    textob.setFont("Verdana", 18)
+    textob.setFont("Verdana", 13)
     textob.textLine("Frekwencja: ")
-    textob.setFont("Verdana", 14)
+    textob.setFont("Verdana", 11)
 
     textob.textLine("")
     textob.textLine(f'Ilość osób uprawnionych: {ilosc_uprawnionych}')
@@ -197,7 +197,7 @@ def konkretne_wyniki_pdf(request, pk):
     c.save()
     buf.seek(0)
 
-    return FileResponse(buf, as_attachment=True, filename='pdf.pdf')
+    return FileResponse(buf, as_attachment=True, filename=f'Raport - {nazwa_wyborow.nazwa}.pdf')
 
 
 @staff_member_required

@@ -71,7 +71,7 @@
         {% else %}
             {% for wybor in wybory %}
                 <div>
-                    <h5>
+                    <h3>
                         {% if user.is_authenticated %}
                             <a {% if not wybor.CzyZaglosowal %} href="wybory/{{ wybor.id_wyborow.id }} {% endif %}">
                                 {{ wybor.id_wyborow.nazwa }}
@@ -83,7 +83,7 @@
                         {% else %}
                             <a>{{ wybor.nazwa }}</a>
                         {% endif %}
-                    </h5>
+                    </h3>
                 </div>
             {% endfor %}
         </div>
